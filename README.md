@@ -1,27 +1,33 @@
 # Não seguidores
 
-Extensão para o Google Chrome que mostra quem você segue no Instagram e não segue você de volta. Visual preto e branco, abre em uma aba própria e roda inteira no seu navegador.
+Extensão para o Google Chrome que mostra quem você segue no Instagram e não segue você de volta. Tem visual preto e branco, abre em uma aba própria e roda inteira no seu navegador, sem enviar nada para servidores externos.
 
-## Recursos
+## O que ela faz
 
-- Lista de quem **não segue você de volta**, com foto, nome de usuário e nome completo
-- Aba **Você não segue**, com quem segue você e você não segue de volta
-- Aba **Ignorados**, para tirar da lista principal perfis que você quer manter (amigos, marcas, páginas)
+- Lista quem **não segue você de volta**, com foto, nome de usuário e nome completo
+- Mostra em outra aba quem você **não segue de volta**
+- Permite **ignorar** perfis que você quer manter (amigos, marcas, páginas) e restaurar depois
 - Busca por usuário ou nome
-- Botões para **copiar a lista** e **baixar em CSV**
-- O último resultado fica salvo, então dá para abrir a extensão sem escanear de novo
-- Barra de progresso durante o escaneamento
+- **Copia a lista** ou **baixa em CSV**
+- Guarda o último resultado, então dá para abrir a extensão sem escanear de novo
+- Mostra o progresso durante o escaneamento
 
 ## Instalação
 
 A extensão ainda não está na Chrome Web Store, então a instalação é manual.
 
-1. Baixe este repositório (**Code** e depois **Download ZIP**) e extraia, ou clone com `git clone`.
+1. Baixe o projeto:
+   ```bash
+   git clone https://github.com/Gustavo-Antero/nao-seguidores.git
+   ```
+   Ou clique em **Code** e depois em **Download ZIP**, e extraia o arquivo.
 2. Abra `chrome://extensions` no Chrome.
 3. Ative o **Modo do desenvolvedor**, no canto superior direito.
 4. Clique em **Carregar sem compactação** e selecione a pasta do projeto, a que contém o arquivo `manifest.json`.
 
-Funciona também em navegadores baseados no Chromium, como Edge e Brave.
+Também funciona em navegadores baseados no Chromium, como Edge e Brave.
+
+Para atualizar depois de baixar uma versão nova, volte em `chrome://extensions` e clique no botão de recarregar da extensão.
 
 ## Como usar
 
@@ -34,15 +40,15 @@ Deixe a aba do Instagram aberta durante o escaneamento, porque é ela que faz a 
 
 ## Como funciona
 
-A extensão injeta o arquivo `content.js` na aba do Instagram. Ele usa a sua sessão já aberta para consultar os mesmos endereços internos que o site do Instagram usa para carregar as listas de seguindo e seguidores, em páginas de 100 perfis, com pausas aleatórias entre elas para não sobrecarregar o serviço. Depois compara as duas listas pelo ID de cada conta.
+O arquivo `content.js` é injetado na aba do Instagram e usa a sua sessão já aberta para consultar os mesmos endereços internos que o site usa para carregar as listas de quem você segue e de quem segue você. As consultas vêm em páginas de 100 perfis, com pausas aleatórias entre elas para não sobrecarregar o serviço. Depois, as duas listas são comparadas pelo ID de cada conta.
 
 A página `app.html` encontra a aba do Instagram, acompanha o progresso e mostra o resultado.
 
 ## Privacidade
 
 - Nenhuma senha é pedida ou lida
-- Nenhum dado é enviado para servidores de terceiros ou para o autor
-- O resultado e a lista de ignorados ficam salvos apenas no armazenamento local do seu navegador (`chrome.storage.local`)
+- Nenhum dado é enviado para servidores de terceiros nem para o autor
+- O resultado e a lista de ignorados ficam apenas no armazenamento local do seu navegador (`chrome.storage.local`)
 
 ### Permissões
 
@@ -51,6 +57,17 @@ A página `app.html` encontra a aba do Instagram, acompanha o progresso e mostra
 | `scripting` | Injetar o script de leitura na aba do Instagram |
 | `storage` | Guardar o último resultado e os perfis ignorados |
 | `https://www.instagram.com/*` | Acessar a aba e as listas do Instagram |
+
+## Solução de problemas
+
+| Mensagem ou situação | O que fazer |
+| --- | --- |
+| A página pede para abrir o Instagram | Abra o instagram.com em outra aba e entre na sua conta. A extensão detecta a aba sozinha. |
+| O Instagram limitou as requisições | Espere alguns minutos antes de tentar de novo e evite escanear várias vezes seguidas. |
+| Sessão inválida ou não foi possível acessar a aba | Recarregue a aba do Instagram (`F5`), confirme que está logado e abra a extensão de novo. |
+| A aba do Instagram foi fechada ou recarregada | Abra o Instagram de novo e clique em **Escanear de novo**. |
+| Uma foto de perfil não aparece | Acontece quando o Instagram bloqueia a imagem. A extensão mostra a inicial do usuário no lugar. |
+| O escaneamento demora | É proposital. As pausas entre as páginas evitam bloqueios, então contas com muitos seguidores levam mais tempo. |
 
 ## Estrutura do projeto
 
@@ -68,15 +85,23 @@ nao-seguidores/
 ## Limitações e avisos
 
 - O Instagram não oferece uma API pública para isso. A extensão usa endereços internos do site, que podem mudar sem aviso e quebrar o funcionamento.
-- Automatizar consultas pode ir contra os termos de uso do Instagram e, em casos de uso excessivo, causar bloqueios temporários. Evite escanear várias vezes seguidas.
-- Se aparecer a mensagem de limite de requisições, espere alguns minutos antes de tentar de novo.
+- Automatizar consultas pode ir contra os termos de uso do Instagram e, em caso de uso excessivo, causar bloqueios temporários.
 - Por segurança, a extensão **não** deixa de seguir ninguém automaticamente. Cada perfil tem um link para você decidir manualmente.
 - Projeto independente, sem qualquer ligação com o Instagram ou a Meta.
+
+## Ideias para o futuro
+
+- Histórico de escaneamentos para mostrar quem deixou de seguir você desde a última vez
+- Exportação da lista em outros formatos
 
 ## Contribuindo
 
 Sugestões e correções são bem-vindas. Abra uma *issue* descrevendo o problema ou envie um *pull request*.
 
+## Autor
+
+Feito por Gustavo ([@Gustavo-Antero](https://github.com/Gustavo-Antero)).
+
 ## Licença
 
-Defina a licença do projeto antes de publicar. A MIT é uma escolha comum para projetos abertos como este.
+Distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
