@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Não seguidores</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Não seguidores</h1>
+    <p class="muted">Quem você segue e não segue você de volta.</p>
+  </header>
+
+  <section id="scan">
+    <button id="scanBtn" class="primary" type="button">Escanear agora</button>
+    <div id="progress" hidden><div id="bar"></div></div>
+    <p id="status" role="status"></p>
+  </section>
+
+  <section id="results" hidden>
+    <div class="hero">
+      <span id="heroNum">0</span>
+      <span class="hero-label">não seguem você de volta</span>
+    </div>
+    <p id="meta" class="muted"></p>
+
+    <div id="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="notBack" aria-selected="true">Não seguem <span id="cNotBack" class="count">0</span></button>
+      <button type="button" role="tab" data-tab="fans" aria-selected="false">Você não segue <span id="cFans" class="count">0</span></button>
+      <button type="button" role="tab" data-tab="ignored" aria-selected="false">Ignorados <span id="cIgnored" class="count">0</span></button>
+    </div>
+
+    <input id="search" type="search" placeholder="Buscar por usuário ou nome" autocomplete="off" aria-label="Buscar">
+    <ul id="list"></ul>
+
+    <footer>
+      <button id="copyBtn" class="ghost" type="button">Copiar lista</button>
+      <button id="csvBtn" class="ghost" type="button">Baixar CSV</button>
+    </footer>
+  </section>
+
+  <p class="note">Tudo roda no seu navegador. Nenhum dado sai do seu computador.</p>
+  <script src="popup.js"></script>
+</body>
+</html>
